@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: #1f2937;
+    background-color: #ffffff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+@layer components {
+  .label-rouge {
+    @apply text-[#B71C1C] text-xs font-medium tracking-[0.3em] uppercase;
+  }
+  .ligne-rouge {
+    @apply w-12 h-px bg-[#B71C1C] flex-shrink-0;
+  }
+  .btn-rouge {
+    @apply bg-[#B71C1C] text-white text-xs font-medium tracking-[0.2em] uppercase px-8 py-4 hover:bg-[#D32F2F] transition-all duration-300;
+  }
+  .btn-contour {
+    @apply border border-white text-white text-xs font-medium tracking-[0.2em] uppercase px-8 py-4 hover:bg-white hover:text-[#1F2937] transition-all duration-300;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #faf7f2;
+}
+::-webkit-scrollbar-thumb {
+  background: #b71c1c;
+  border-radius: 4px;
+}
+
+/* Masonry layout */
+.masonry {
+  columns: 3 180px;
+  column-gap: 0.75rem;
+}
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+@media (max-width: 480px) {
+  .masonry {
+    columns: 2 120px;
+  }
+}
