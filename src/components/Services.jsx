@@ -1,95 +1,90 @@
 import { motion } from 'framer-motion'
-import { Heart, Cake, Sparkles, Briefcase, Home, Package } from 'lucide-react'
 
 const services = [
   {
-    Icon: Heart,
+    num: '01',
     title: 'Mariages',
     desc: "De la décoration de cérémonie au bouquet de mariée, nous créons l'atmosphère florale de votre plus beau jour.",
     accent: 'Devis sur mesure',
   },
   {
-    Icon: Cake,
+    num: '02',
     title: 'Anniversaires',
     desc: 'Surprenez vos proches avec des arrangements floraux personnalisés qui marquent les esprits et les cœurs.',
     accent: 'Livraison le jour J',
   },
   {
-    Icon: Sparkles,
+    num: '03',
     title: 'Saint-Valentin',
-    desc: 'Exprimez votre amour avec nos collections exclusives de roses et de compositions romantiques.',
+    desc: 'Exprimez votre amour avec nos collections exclusives de roses et de compositions romantiques sur mesure.',
     accent: 'Collections exclusives',
   },
   {
-    Icon: Briefcase,
+    num: '04',
     title: 'Événements corporatifs',
     desc: 'Fleurissez vos espaces professionnels, conférences et réceptions avec élégance et raffinement.',
     accent: 'Tarifs entreprises',
   },
   {
-    Icon: Home,
+    num: '05',
     title: 'Décoration florale',
     desc: 'Sublimez votre intérieur avec des abonnements floraux hebdomadaires ou des compositions permanentes.',
-    accent: 'Abonnements disponibles',
+    accent: 'Abonnements dispo',
   },
   {
-    Icon: Package,
+    num: '06',
     title: 'Livraison express',
-    desc: 'Service de livraison le jour même à Paris — parce que certaines émotions ne peuvent pas attendre.',
+    desc: "Service de livraison le jour même à Paris — parce que certaines émotions ne peuvent pas attendre.",
     accent: 'Livraison en 3h',
   },
 ]
 
 export default function Services() {
   return (
-    <section id="services" className="py-28 bg-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+    <section id="services" className="py-24 lg:py-32 bg-[#0F0C09]">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+          className="mb-14 lg:mb-18"
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-10 h-px bg-[#B71C1C]" />
-            <span className="text-[#B71C1C] text-[0.65rem] font-medium tracking-[0.32em] uppercase">Ce que nous offrons</span>
-            <div className="w-10 h-px bg-[#B71C1C]" />
-          </div>
-          <h2 className="font-serif text-4xl md:text-5xl text-[#1F2937] mb-4">Nos services floraux</h2>
-          <p className="text-gray-500 text-base sm:text-lg font-light max-w-xl mx-auto leading-relaxed">
-            De l'occasion la plus intime au grand événement, nous avons une solution florale adaptée.
-          </p>
+          <span className="text-[#B8922A] text-[0.57rem] tracking-[0.52em] uppercase block mb-5">
+            04 — Services
+          </span>
+          <h2 className="font-serif text-white text-[clamp(2.5rem,5.5vw,5.5rem)] leading-[0.92]">
+            Nos prestations<br />
+            <span className="italic text-[#E8CFC8]">florales</span>
+          </h2>
         </motion.div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06]">
           {services.map((s, i) => (
             <motion.div
-              key={s.title}
-              initial={{ opacity: 0, y: 32 }}
+              key={s.num}
+              initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: (i % 3) * 0.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -5, boxShadow: '0 20px 60px -12px rgba(0,0,0,0.1)' }}
-              className="group bg-white border border-gray-100 p-8 flex flex-col gap-5 transition-all duration-300 cursor-default"
+              transition={{ delay: (i % 3) * 0.09, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="group bg-[#0F0C09] hover:bg-[#161210] transition-colors duration-300 p-8 lg:p-10 cursor-default"
             >
-              {/* Icon */}
-              <div className="w-12 h-12 bg-[#FAF7F2] group-hover:bg-[#B71C1C]/8 transition-colors duration-300 flex items-center justify-center">
-                <s.Icon size={22} className="text-[#B71C1C]" />
+              {/* Big number */}
+              <div className="font-serif text-[#B8922A]/15 text-7xl leading-none mb-5 group-hover:text-[#B8922A]/30 transition-colors duration-400 select-none">
+                {s.num}
               </div>
 
-              {/* Text */}
-              <div className="flex flex-col gap-2.5 flex-1">
-                <h3 className="font-serif text-xl text-[#1F2937]">{s.title}</h3>
-                <p className="text-gray-500 text-sm font-light leading-relaxed flex-1">{s.desc}</p>
-              </div>
+              <h3 className="font-serif text-white text-xl mb-3">{s.title}</h3>
+              <p className="text-white/32 text-sm font-light leading-relaxed mb-6">{s.desc}</p>
 
-              {/* Accent */}
-              <div className="flex items-center gap-2 pt-3 border-t border-gray-50">
-                <div className="w-1.5 h-1.5 rounded-full bg-[#B71C1C]" />
-                <span className="text-[#B71C1C] text-xs font-medium tracking-wide">{s.accent}</span>
+              <div className="flex items-center gap-2.5">
+                <div className="w-0 group-hover:w-6 h-px bg-[#9B1B30] transition-all duration-500 flex-shrink-0" />
+                <span className="text-[#B8922A] text-[0.5rem] tracking-[0.42em] uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  {s.accent}
+                </span>
               </div>
             </motion.div>
           ))}

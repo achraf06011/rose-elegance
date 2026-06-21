@@ -4,7 +4,7 @@ import { Instagram, Facebook, Twitter, Youtube, Send, MapPin, Phone, Mail, Clock
 
 const navLinks = [
   { label: 'Accueil', href: '#accueil' },
-  { label: 'Boutique', href: '#produits' },
+  { label: 'Collections', href: '#collections' },
   { label: 'Bouquets', href: '#bouquets' },
   { label: 'Services', href: '#services' },
   { label: 'Galerie', href: '#gallery' },
@@ -32,46 +32,42 @@ export default function Footer() {
   const [subscribed, setSubscribed] = useState(false)
   const [showTop, setShowTop] = useState(false)
 
-  // Show back-to-top button only after scrolling down 500px
   useEffect(() => {
-    const onScroll = () => setShowTop(window.scrollY > 500)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    const fn = () => setShowTop(window.scrollY > 500)
+    window.addEventListener('scroll', fn, { passive: true })
+    return () => window.removeEventListener('scroll', fn)
   }, [])
 
   const handleNewsletter = e => {
     e.preventDefault()
-    if (email.includes('@')) {
-      setSubscribed(true)
-      setEmail('')
-    }
+    if (email.includes('@')) { setSubscribed(true); setEmail('') }
   }
 
   return (
     <>
-      <footer id="footer" className="bg-[#1F2937] text-white">
-        {/* Main footer */}
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+      <footer className="bg-[#0F0C09] text-white">
+        {/* Main */}
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-20">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-10">
+
             {/* Brand */}
             <div className="lg:col-span-1">
-              <div className="mb-6">
-                <div className="font-serif text-2xl text-white mb-1">Rose Élégance</div>
-                <div className="text-[0.55rem] tracking-[0.38em] text-gray-500 uppercase">Fleuriste Premium</div>
+              <div className="mb-5">
+                <div className="font-serif text-white text-xl mb-1">Rose Élégance</div>
+                <div className="text-[0.48rem] tracking-[0.48em] text-[#B8922A] uppercase">Fleuriste Premium</div>
               </div>
-              <p className="text-gray-400 text-sm font-light leading-relaxed mb-7">
-                Depuis 2008, nous créons des bouquets artisanaux et des compositions florales qui émeuvent et enchantent. L'art floral au service de vos émotions.
+              <p className="text-white/30 text-sm font-light leading-relaxed mb-7">
+                Depuis 2008, nous créons des bouquets artisanaux et des compositions florales qui émeuvent et enchantent.
               </p>
-              {/* Socials */}
-              <div className="flex gap-3">
+              <div className="flex gap-2.5">
                 {socials.map(s => (
                   <a
                     key={s.label}
                     href={s.href}
                     aria-label={s.label}
-                    className="w-9 h-9 border border-gray-700 hover:border-[#B71C1C] hover:bg-[#B71C1C]/10 flex items-center justify-center transition-all duration-300 group"
+                    className="w-9 h-9 border border-white/[0.08] hover:border-[#9B1B30]/60 hover:bg-[#9B1B30]/10 flex items-center justify-center transition-all duration-300 group"
                   >
-                    <s.Icon size={15} className="text-gray-500 group-hover:text-white transition-colors duration-300" />
+                    <s.Icon size={14} className="text-white/30 group-hover:text-white/70 transition-colors duration-300" />
                   </a>
                 ))}
               </div>
@@ -79,15 +75,15 @@ export default function Footer() {
 
             {/* Navigation */}
             <div>
-              <h4 className="text-[0.65rem] font-medium tracking-[0.32em] uppercase text-gray-400 mb-6">Navigation</h4>
+              <h4 className="text-[0.57rem] font-medium tracking-[0.45em] uppercase text-white/30 mb-6">Navigation</h4>
               <ul className="flex flex-col gap-3">
                 {navLinks.map(link => (
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-gray-400 text-sm hover:text-white transition-colors duration-200 flex items-center gap-1.5 group"
+                      className="text-white/35 text-sm font-light hover:text-white transition-colors duration-200 flex items-center gap-1.5 group"
                     >
-                      <span className="w-0 group-hover:w-3 h-px bg-[#B71C1C] transition-all duration-300 flex-shrink-0" />
+                      <span className="w-0 group-hover:w-3 h-px bg-[#9B1B30] transition-all duration-300 flex-shrink-0" />
                       {link.label}
                     </a>
                   </li>
@@ -97,15 +93,15 @@ export default function Footer() {
 
             {/* Services */}
             <div>
-              <h4 className="text-[0.65rem] font-medium tracking-[0.32em] uppercase text-gray-400 mb-6">Services</h4>
+              <h4 className="text-[0.57rem] font-medium tracking-[0.45em] uppercase text-white/30 mb-6">Services</h4>
               <ul className="flex flex-col gap-3">
                 {services.map(s => (
                   <li key={s}>
                     <a
                       href="#services"
-                      className="text-gray-400 text-sm hover:text-white transition-colors duration-200 flex items-center gap-1.5 group"
+                      className="text-white/35 text-sm font-light hover:text-white transition-colors duration-200 flex items-center gap-1.5 group"
                     >
-                      <span className="w-0 group-hover:w-3 h-px bg-[#B71C1C] transition-all duration-300 flex-shrink-0" />
+                      <span className="w-0 group-hover:w-3 h-px bg-[#9B1B30] transition-all duration-300 flex-shrink-0" />
                       {s}
                     </a>
                   </li>
@@ -115,37 +111,29 @@ export default function Footer() {
 
             {/* Contact + Newsletter */}
             <div>
-              <h4 className="text-[0.65rem] font-medium tracking-[0.32em] uppercase text-gray-400 mb-6">Contact & Horaires</h4>
+              <h4 className="text-[0.57rem] font-medium tracking-[0.45em] uppercase text-white/30 mb-6">Contact</h4>
               <div className="flex flex-col gap-3.5 mb-8">
-                <div className="flex gap-3 text-sm text-gray-400">
-                  <MapPin size={14} className="text-[#B71C1C] mt-0.5 flex-shrink-0" />
-                  <span>24, Rue des Fleurs, 75008 Paris</span>
-                </div>
-                <div className="flex gap-3 text-sm text-gray-400">
-                  <Phone size={14} className="text-[#B71C1C] mt-0.5 flex-shrink-0" />
-                  <a href="tel:+33123456789" className="hover:text-white transition-colors">01 23 45 67 89</a>
-                </div>
-                <div className="flex gap-3 text-sm text-gray-400">
-                  <Mail size={14} className="text-[#B71C1C] mt-0.5 flex-shrink-0" />
-                  <a href="mailto:contact@rose-elegance.fr" className="hover:text-white transition-colors">
-                    contact@rose-elegance.fr
-                  </a>
-                </div>
-                <div className="flex gap-3 text-sm text-gray-400">
-                  <Clock size={14} className="text-[#B71C1C] mt-0.5 flex-shrink-0" />
-                  <span>Lun – Sam : 8h30 – 19h30<br />Dimanche : 9h – 13h</span>
-                </div>
+                {[
+                  { Icon: MapPin, val: '24, Rue des Fleurs, 75008 Paris' },
+                  { Icon: Phone, val: '01 23 45 67 89', href: 'tel:+33123456789' },
+                  { Icon: Mail, val: 'contact@rose-elegance.fr', href: 'mailto:contact@rose-elegance.fr' },
+                  { Icon: Clock, val: 'Lun – Sam : 8h30 – 19h30' },
+                ].map(({ Icon, val, href }, i) => (
+                  <div key={i} className="flex gap-3 text-sm text-white/30">
+                    <Icon size={13} className="text-[#9B1B30] mt-0.5 flex-shrink-0" />
+                    {href
+                      ? <a href={href} className="hover:text-white/70 transition-colors">{val}</a>
+                      : <span>{val}</span>
+                    }
+                  </div>
+                ))}
               </div>
 
               {/* Newsletter */}
               <div>
-                <p className="text-[0.65rem] font-medium tracking-[0.28em] uppercase text-gray-400 mb-3">Newsletter</p>
+                <p className="text-[0.55rem] tracking-[0.4em] uppercase text-white/25 mb-3">Newsletter</p>
                 {subscribed ? (
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-green-400 text-sm"
-                  >
+                  <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-green-400/80 text-sm">
                     Merci pour votre inscription !
                   </motion.p>
                 ) : (
@@ -156,39 +144,38 @@ export default function Footer() {
                       value={email}
                       onChange={e => setEmail(e.target.value)}
                       placeholder="Votre email"
-                      className="flex-1 bg-white/[0.06] border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-[#B71C1C] transition-colors duration-200 min-w-0"
+                      className="flex-1 bg-white/[0.04] border border-white/[0.08] px-4 py-2.5 text-sm text-white placeholder-white/20 focus:outline-none focus:border-[#9B1B30]/60 transition-colors duration-200 min-w-0"
                     />
                     <button
                       type="submit"
-                      className="bg-[#B71C1C] px-4 py-2.5 hover:bg-[#D32F2F] transition-colors duration-300 flex-shrink-0"
+                      className="bg-[#9B1B30] hover:bg-[#B8202E] px-4 py-2.5 transition-colors duration-300 flex-shrink-0"
                       aria-label="S'abonner"
                     >
-                      <Send size={14} />
+                      <Send size={13} className="text-white" />
                     </button>
                   </form>
                 )}
-                <p className="text-gray-600 text-xs mt-2">Offres exclusives, nouveautés & inspirations florales.</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-gray-800">
-          <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-gray-600 text-xs">
+        <div className="border-t border-white/[0.05]">
+          <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-white/20 text-xs">
               © {new Date().getFullYear()} Rose Élégance. Tous droits réservés.
             </p>
             <div className="flex gap-6">
-              <a href="#" className="text-gray-600 text-xs hover:text-gray-400 transition-colors">Mentions légales</a>
-              <a href="#" className="text-gray-600 text-xs hover:text-gray-400 transition-colors">Politique de confidentialité</a>
-              <a href="#" className="text-gray-600 text-xs hover:text-gray-400 transition-colors">CGV</a>
+              {['Mentions légales', 'Confidentialité', 'CGV'].map(l => (
+                <a key={l} href="#" className="text-white/20 text-xs hover:text-white/40 transition-colors">{l}</a>
+              ))}
             </div>
           </div>
         </div>
       </footer>
 
-      {/* Back to top — appears only after scrolling 500px */}
+      {/* Back to top — only visible after scroll */}
       <AnimatePresence>
         {showTop && (
           <motion.a
@@ -198,10 +185,10 @@ export default function Footer() {
             exit={{ opacity: 0, scale: 0.8 }}
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-6 right-6 w-11 h-11 bg-[#B71C1C] text-white flex items-center justify-center shadow-lg shadow-red-900/40 hover:bg-[#D32F2F] transition-colors duration-300 z-30"
+            className="fixed bottom-6 right-6 w-11 h-11 bg-[#9B1B30] hover:bg-[#B8202E] text-white flex items-center justify-center shadow-lg shadow-[#9B1B30]/30 transition-colors duration-300 z-30"
             aria-label="Retour en haut"
           >
-            <ArrowUp size={17} />
+            <ArrowUp size={16} />
           </motion.a>
         )}
       </AnimatePresence>

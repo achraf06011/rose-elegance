@@ -4,13 +4,19 @@ export default {
   theme: {
     extend: {
       colors: {
-        rouge: {
-          DEFAULT: '#B71C1C',
-          vif: '#D32F2F',
-          pale: '#FFEBEE',
+        encre: '#0F0C09',
+        craie: '#FDFAF6',
+        pivoine: {
+          DEFAULT: '#9B1B30',
+          vif: '#B8202E',
+          pale: '#F5E8EB',
+          rose: '#E8CFC8',
         },
-        creme: '#FAF7F2',
-        sombre: '#1F2937',
+        or: {
+          DEFAULT: '#B8922A',
+          clair: '#D4B483',
+        },
+        sable: '#E8DDD0',
       },
       fontFamily: {
         serif: ['"Playfair Display"', 'Georgia', 'serif'],

@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Phone } from 'lucide-react'
 
-const navLinks = [
-  { label: 'Accueil', href: '#accueil' },
-  { label: 'Boutique', href: '#produits' },
+const links = [
+  { label: 'Collections', href: '#collections' },
   { label: 'Bouquets', href: '#bouquets' },
   { label: 'Services', href: '#services' },
   { label: 'Galerie', href: '#gallery' },
@@ -13,166 +12,139 @@ const navLinks = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [open, setOpen] = useState(false)
 
-  // Passive scroll listener for performance
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    const fn = () => setScrolled(window.scrollY > 80)
+    window.addEventListener('scroll', fn, { passive: true })
+    return () => window.removeEventListener('scroll', fn)
   }, [])
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    document.body.style.overflow = open ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
-  }, [menuOpen])
+  }, [open])
 
   return (
     <>
       <motion.header
-        initial={{ y: -100, opacity: 0 }}
+        initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
           scrolled
-            ? 'bg-white/96 backdrop-blur-md shadow-sm border-b border-gray-100'
+            ? 'bg-[#0F0C09]/95 backdrop-blur-md border-b border-white/[0.08]'
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 lg:px-10">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
           <div className={`flex items-center justify-between transition-all duration-500 ${scrolled ? 'py-4' : 'py-6'}`}>
+
             {/* Logo */}
             <a href="#accueil" className="flex flex-col leading-none">
-              <span
-                className={`font-serif text-[1.45rem] font-medium tracking-tight transition-colors duration-500 ${
-                  scrolled ? 'text-[#B71C1C]' : 'text-white'
-                }`}
-              >
-                Rose Élégance
-              </span>
-              <span
-                className={`text-[0.52rem] tracking-[0.38em] uppercase font-medium mt-0.5 transition-colors duration-500 ${
-                  scrolled ? 'text-gray-400' : 'text-white/50'
-                }`}
-              >
-                Fleuriste Premium
-              </span>
+              <span className="font-serif text-[1.25rem] text-white tracking-tight">Rose Élégance</span>
+              <span className="text-[0.48rem] tracking-[0.48em] uppercase text-[#B8922A] mt-0.5">Fleuriste Premium</span>
             </a>
 
-            {/* Desktop Nav */}
+            {/* Desktop nav */}
             <nav className="hidden lg:flex items-center gap-9">
-              {navLinks.map(link => (
+              {links.map(l => (
                 <a
-                  key={link.label}
-                  href={link.href}
-                  className={`text-sm font-medium tracking-wide transition-all duration-300 relative group ${
-                    scrolled ? 'text-gray-700 hover:text-[#B71C1C]' : 'text-white/80 hover:text-white'
-                  }`}
+                  key={l.label}
+                  href={l.href}
+                  className="text-white/55 hover:text-white text-[0.78rem] font-light tracking-wide transition-colors duration-300 relative group"
                 >
-                  {link.label}
-                  <span className="absolute -bottom-1 left-0 h-px bg-[#B71C1C] w-0 group-hover:w-full transition-all duration-300" />
+                  {l.label}
+                  <span className="absolute -bottom-0.5 left-0 h-px w-0 group-hover:w-full bg-[#B8922A] transition-all duration-300" />
                 </a>
               ))}
             </nav>
 
-            {/* Right zone */}
-            <div className="hidden lg:flex items-center gap-5">
+            {/* Right */}
+            <div className="hidden lg:flex items-center gap-6">
               <a
                 href="tel:+33123456789"
-                className={`flex items-center gap-2 text-sm transition-colors duration-300 ${
-                  scrolled ? 'text-gray-500 hover:text-[#B71C1C]' : 'text-white/60 hover:text-white'
-                }`}
+                className="flex items-center gap-2 text-white/35 hover:text-white/70 text-xs transition-colors duration-300"
               >
-                <Phone size={14} />
-                <span>01 23 45 67 89</span>
+                <Phone size={11} />
+                01 23 45 67 89
               </a>
               <a
                 href="#contact"
-                className="bg-[#B71C1C] hover:bg-[#D32F2F] text-white text-[0.7rem] font-medium tracking-[0.22em] uppercase px-7 py-3.5 transition-colors duration-300 hover:shadow-lg hover:shadow-red-900/20"
+                className="bg-[#9B1B30] hover:bg-[#B8202E] text-white text-[0.58rem] tracking-[0.32em] uppercase px-6 py-3 transition-colors duration-300"
               >
                 Commander
               </a>
             </div>
 
             {/* Hamburger */}
-            <button
-              onClick={() => setMenuOpen(v => !v)}
-              className="lg:hidden p-1"
-              aria-label="Menu navigation"
-            >
-              {menuOpen ? (
-                <X size={22} className={scrolled ? 'text-gray-800' : 'text-white'} />
-              ) : (
-                <Menu size={22} className={scrolled ? 'text-gray-800' : 'text-white'} />
-              )}
+            <button onClick={() => setOpen(v => !v)} className="lg:hidden text-white p-1">
+              {open ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
       </motion.header>
 
-      {/* Backdrop */}
+      {/* Mobile backdrop */}
       <AnimatePresence>
-        {menuOpen && (
+        {open && (
           <motion.div
-            key="backdrop"
+            key="bd"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-black/45 backdrop-blur-sm"
-            onClick={() => setMenuOpen(false)}
+            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+            onClick={() => setOpen(false)}
           />
         )}
       </AnimatePresence>
 
-      {/* Drawer */}
+      {/* Mobile drawer */}
       <AnimatePresence>
-        {menuOpen && (
+        {open && (
           <motion.div
             key="drawer"
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed top-0 right-0 bottom-0 z-50 w-72 bg-white shadow-2xl flex flex-col"
+            className="fixed right-0 top-0 bottom-0 z-50 w-72 bg-[#0F0C09] border-l border-white/[0.08] flex flex-col"
           >
-            <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-              <span className="font-serif text-xl text-[#B71C1C]">Rose Élégance</span>
-              <button onClick={() => setMenuOpen(false)} aria-label="Fermer">
-                <X size={20} className="text-gray-500 hover:text-gray-800 transition-colors" />
+            <div className="flex items-center justify-between px-6 py-5 border-b border-white/[0.08]">
+              <span className="font-serif text-white text-lg">Rose Élégance</span>
+              <button onClick={() => setOpen(false)}>
+                <X size={18} className="text-white/40 hover:text-white transition-colors" />
               </button>
             </div>
-            <nav className="flex flex-col px-6 pt-5 flex-1 overflow-y-auto">
-              {navLinks.map((link, i) => (
+            <nav className="flex flex-col px-6 pt-4 flex-1">
+              {links.map((l, i) => (
                 <motion.a
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  initial={{ opacity: 0, x: 18 }}
+                  key={l.label}
+                  href={l.href}
+                  onClick={() => setOpen(false)}
+                  initial={{ opacity: 0, x: 16 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.06 + i * 0.065 }}
-                  className="py-4 border-b border-gray-50 text-gray-800 font-medium text-sm hover:text-[#B71C1C] transition-colors flex items-center justify-between"
+                  transition={{ delay: 0.05 + i * 0.06 }}
+                  className="py-4 border-b border-white/[0.06] text-white/55 hover:text-white text-sm font-light transition-colors duration-200"
                 >
-                  {link.label}
-                  <span className="text-gray-300">›</span>
+                  {l.label}
                 </motion.a>
               ))}
             </nav>
-            <div className="p-6 space-y-3 border-t border-gray-100">
+            <div className="p-6 border-t border-white/[0.08]">
               <a
                 href="#contact"
-                onClick={() => setMenuOpen(false)}
-                className="block bg-[#B71C1C] hover:bg-[#D32F2F] text-white text-center py-3.5 text-[0.7rem] font-medium tracking-[0.22em] uppercase transition-colors"
+                onClick={() => setOpen(false)}
+                className="block bg-[#9B1B30] hover:bg-[#B8202E] text-white text-center py-3.5 text-[0.6rem] tracking-[0.32em] uppercase transition-colors"
               >
                 Commander
               </a>
               <a
                 href="tel:+33123456789"
-                className="flex items-center justify-center gap-2 text-gray-500 text-sm hover:text-[#B71C1C] transition-colors"
+                className="flex items-center justify-center gap-2 mt-3 text-white/35 text-xs hover:text-white/60 transition-colors"
               >
-                <Phone size={14} />
-                01 23 45 67 89
+                <Phone size={11} /> 01 23 45 67 89
               </a>
             </div>
           </motion.div>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 const testimonials = [
   {
@@ -9,8 +9,7 @@ const testimonials = [
     role: 'Cliente fidèle depuis 2019',
     text: "Rose Élégance a sublimé mon mariage. Chaque arrangement était d'une beauté à couper le souffle. L'équipe a su interpréter ma vision et la dépasser. Je recommande les yeux fermés.",
     rating: 5,
-    avatar:
-      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=75',
+    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&q=75',
   },
   {
     id: 2,
@@ -18,8 +17,7 @@ const testimonials = [
     role: 'Directeur événementiel',
     text: "Pour nos événements d'entreprise, nous ne faisons appel qu'à Rose Élégance. La ponctualité, la qualité et le sens du détail sont au rendez-vous à chaque fois. Un partenaire de confiance.",
     rating: 5,
-    avatar:
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=75',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&q=75',
   },
   {
     id: 3,
@@ -27,149 +25,141 @@ const testimonials = [
     role: 'Amatrice de fleurs',
     text: "J'offre des bouquets de Rose Élégance à mes proches depuis des années. La fraîcheur des fleurs est inégalée, et les compositions sont toujours originales et raffinées. Un vrai coup de cœur.",
     rating: 5,
-    avatar:
-      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=80&q=75',
+    avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=80&q=75',
   },
   {
     id: 4,
     name: 'Pierre Dumont',
     role: 'Organisateur de mariages',
-    text: "Collaborer avec Rose Élégance, c'est travailler avec des vrais artistes. Leur créativité, leur professionnalisme et leur passion pour les fleurs transparaissent dans chaque création. Exceptionnel.",
+    text: "Collaborer avec Rose Élégance, c'est travailler avec de vrais artistes. Leur créativité, leur professionnalisme et leur passion pour les fleurs transparaissent dans chaque création. Exceptionnel.",
     rating: 5,
-    avatar:
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=75',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&q=75',
   },
 ]
 
 export default function Testimonials() {
   const [current, setCurrent] = useState(0)
-  const [direction, setDirection] = useState(1)
+  const [dir, setDir] = useState(1)
 
-  const go = useCallback(
-    dir => {
-      setDirection(dir)
-      setCurrent(c => (c + dir + testimonials.length) % testimonials.length)
-    },
-    [],
-  )
+  const go = useCallback(d => {
+    setDir(d)
+    setCurrent(c => (c + d + testimonials.length) % testimonials.length)
+  }, [])
 
   useEffect(() => {
-    const id = setInterval(() => go(1), 5000)
+    const id = setInterval(() => go(1), 5500)
     return () => clearInterval(id)
   }, [go])
 
   const variants = {
-    enter: dir => ({ opacity: 0, x: dir > 0 ? 60 : -60 }),
-    center: { opacity: 1, x: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
-    exit: dir => ({ opacity: 0, x: dir > 0 ? -60 : 60, transition: { duration: 0.35 } }),
+    enter: d => ({ opacity: 0, x: d > 0 ? 50 : -50 }),
+    center: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+    exit: d => ({ opacity: 0, x: d > 0 ? -50 : 50, transition: { duration: 0.35 } }),
   }
 
   const t = testimonials[current]
 
   return (
-    <section className="py-28 bg-[#FAF7F2]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+    <section className="py-24 lg:py-32 bg-[#FDFAF6]">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.85 }}
+          className="mb-16"
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-10 h-px bg-[#B71C1C]" />
-            <span className="text-[#B71C1C] text-[0.65rem] font-medium tracking-[0.32em] uppercase">Témoignages</span>
-            <div className="w-10 h-px bg-[#B71C1C]" />
-          </div>
-          <h2 className="font-serif text-4xl md:text-5xl text-[#1F2937] mb-4">Ce que disent nos clients</h2>
-          <p className="text-gray-500 text-base sm:text-lg font-light max-w-xl mx-auto leading-relaxed">
-            Leur satisfaction est notre plus belle récompense.
-          </p>
+          <span className="text-[#B8922A] text-[0.57rem] tracking-[0.52em] uppercase block mb-5">
+            06 — Témoignages
+          </span>
+          <h2 className="font-serif text-[#0F0C09] text-[clamp(2.5rem,5.5vw,5.5rem)] leading-[0.92]">
+            Ce qu'ils<br />
+            <span className="italic">disent de nous</span>
+          </h2>
         </motion.div>
 
-        {/* Carousel */}
-        <div className="max-w-3xl mx-auto">
-          <div className="relative bg-white p-10 md:p-14 shadow-sm border border-gray-100 min-h-[280px] flex flex-col justify-between overflow-hidden">
-            {/* Quote icon */}
-            <Quote size={48} className="absolute top-8 right-8 text-[#B71C1C]/8 rotate-180" />
+        {/* Testimonial block */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-start">
+          <div className="relative min-h-[220px]">
+            {/* Decorative large quote */}
+            <div className="absolute -top-4 -left-2 font-serif text-[#0F0C09]/[0.04] text-[10rem] leading-none select-none pointer-events-none">
+              "
+            </div>
 
-            <AnimatePresence custom={direction} mode="wait">
+            <AnimatePresence custom={dir} mode="wait">
               <motion.div
                 key={t.id}
-                custom={direction}
+                custom={dir}
                 variants={variants}
                 initial="enter"
                 animate="center"
                 exit="exit"
-                className="flex flex-col gap-6"
+                className="relative"
               >
-                {/* Stars */}
-                <div className="flex gap-1">
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} size={14} className="fill-amber-400 text-amber-400" />
-                  ))}
-                </div>
-
-                {/* Text */}
-                <p className="text-gray-700 text-base sm:text-lg font-light leading-relaxed italic">
+                <p className="font-serif text-[#0F0C09] text-xl sm:text-2xl lg:text-[1.7rem] font-light leading-[1.5] mb-10 max-w-3xl italic">
                   "{t.text}"
                 </p>
 
-                {/* Author */}
-                <div className="flex items-center gap-4 pt-2">
+                <div className="flex items-center gap-4">
                   <img
                     src={t.avatar}
                     alt={t.name}
-                    className="w-12 h-12 rounded-full object-cover border-2 border-[#B71C1C]/20"
+                    className="w-12 h-12 rounded-full object-cover"
                     loading="lazy"
                     decoding="async"
                     width="48"
                     height="48"
                   />
                   <div>
-                    <div className="font-medium text-[#1F2937] text-sm">{t.name}</div>
-                    <div className="text-gray-400 text-xs font-light">{t.role}</div>
+                    <div className="font-medium text-[#0F0C09] text-sm">{t.name}</div>
+                    <div className="text-[#0F0C09]/40 text-xs font-light">{t.role}</div>
+                  </div>
+                  <div className="ml-4 flex gap-1.5">
+                    {Array.from({ length: t.rating }).map((_, i) => (
+                      <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#B8922A]" />
+                    ))}
                   </div>
                 </div>
               </motion.div>
             </AnimatePresence>
           </div>
 
-          {/* Controls */}
-          <div className="flex items-center justify-between mt-6">
-            {/* Dots */}
-            <div className="flex gap-2">
-              {testimonials.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i) }}
-                  className={`transition-all duration-300 rounded-full ${
-                    i === current ? 'w-7 h-2 bg-[#B71C1C]' : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
-                  }`}
-                  aria-label={`Témoignage ${i + 1}`}
-                />
-              ))}
+          {/* Arrow controls */}
+          <div className="flex lg:flex-col items-center gap-4 lg:pt-6">
+            <button
+              onClick={() => go(-1)}
+              className="w-11 h-11 border border-[#0F0C09]/12 hover:border-[#9B1B30] hover:text-[#9B1B30] flex items-center justify-center transition-all duration-300 text-[#0F0C09]/40"
+              aria-label="Précédent"
+            >
+              <ChevronLeft size={16} />
+            </button>
+            <div className="text-[#0F0C09]/25 text-xs font-light tracking-widest">
+              {String(current + 1).padStart(2, '0')} / {String(testimonials.length).padStart(2, '0')}
             </div>
-
-            {/* Arrows */}
-            <div className="flex gap-2">
-              <button
-                onClick={() => go(-1)}
-                className="w-10 h-10 border border-gray-200 hover:border-[#B71C1C] hover:text-[#B71C1C] flex items-center justify-center transition-all duration-300 text-gray-500"
-                aria-label="Précédent"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              <button
-                onClick={() => go(1)}
-                className="w-10 h-10 bg-[#B71C1C] text-white hover:bg-[#D32F2F] flex items-center justify-center transition-all duration-300"
-                aria-label="Suivant"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
+            <button
+              onClick={() => go(1)}
+              className="w-11 h-11 bg-[#9B1B30] text-white hover:bg-[#B8202E] flex items-center justify-center transition-colors duration-300"
+              aria-label="Suivant"
+            >
+              <ChevronRight size={16} />
+            </button>
           </div>
+        </div>
+
+        {/* Progress lines */}
+        <div className="flex gap-2 mt-12">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => { setDir(i > current ? 1 : -1); setCurrent(i) }}
+              className={`transition-all duration-300 h-0.5 ${
+                i === current ? 'w-10 bg-[#9B1B30]' : 'w-4 bg-[#0F0C09]/12 hover:bg-[#0F0C09]/25'
+              }`}
+              aria-label={`Témoignage ${i + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>
