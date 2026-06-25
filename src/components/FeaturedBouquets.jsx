@@ -1,19 +1,10 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ShoppingBag, Check } from 'lucide-react'
-
-const bouquets = [
-  { id: 1, name: 'Éclat de Roses',      desc: 'Roses de Damask & pivoines',    price: '89',  badge: 'Bestseller' },
-  { id: 2, name: 'Nuage Blanc',          desc: 'Roses blanches & muguet',       price: '72',  badge: null },
-  { id: 3, name: "Soleil d'Or",          desc: 'Tournesols & chrysanthèmes',    price: '55',  badge: 'Nouveau' },
-  { id: 4, name: 'Poésie Rose',          desc: 'Tulipes & pivoines',            price: '68',  badge: null },
-  { id: 5, name: 'Romance Florale',      desc: 'Mélange de roses sauvages',     price: '95',  badge: 'Exclusif' },
-  { id: 6, name: 'Jardin Secret',        desc: 'Bouquet champêtre de saison',   price: '62',  badge: null },
-  { id: 7, name: 'Bouquet Prestige',     desc: 'Roses dorées & amaryllis',      price: '125', badge: 'Premium' },
-  { id: 8, name: 'Douceur Printanière',  desc: 'Fleurs mixtes du printemps',    price: '49',  badge: null },
-]
+import { ShoppingBag, Check, ImageOff } from 'lucide-react'
+import { useStore } from '../context/StoreContext'
 
 export default function FeaturedBouquets() {
+  const { products } = useStore()
   const [added, setAdded] = useState(null)
 
   const handleAdd = id => {
@@ -53,9 +44,20 @@ export default function FeaturedBouquets() {
           </motion.a>
         </div>
 
-        {/* Cards — no photos, typographic design */}
+        {/* Empty state */}
+        {products.length === 0 && (
+          <div className="border-2 border-dashed border-[#0F0C09]/10 py-24 flex flex-col items-center gap-3 text-center">
+            <ImageOff size={32} className="text-[#0F0C09]/15" />
+            <p className="text-[#0F0C09]/30 text-sm font-light">
+              Aucun produit pour l'instant — ajoutez-en depuis{' '}
+              <a href="#/admin" className="text-[#9B1B30] hover:underline">l'espace admin</a>.
+            </p>
+          </div>
+        )}
+
+        {/* Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-          {bouquets.map((b, i) => (
+          {products.map((b, i) => (
             <motion.div
               key={b.id}
               initial={{ opacity: 0, y: 32 }}
@@ -64,16 +66,25 @@ export default function FeaturedBouquets() {
               transition={{ delay: (i % 4) * 0.07, duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
               className="group border border-[#0F0C09]/[0.07] hover:border-[#9B1B30]/35 transition-all duration-300 flex flex-col"
             >
-              {/* Visual area — number as decorative element */}
-              <div className="bg-[#F5F1EC] relative overflow-hidden flex items-center justify-center p-6 aspect-[4/3]">
-                <span className="font-serif text-[#0F0C09]/[0.065] text-[5rem] sm:text-[6rem] lg:text-[7rem] leading-none select-none">
-                  {String(b.id).padStart(2, '0')}
-                </span>
-                {/* Thin decorative lines */}
-                <div className="absolute top-4 left-4 w-4 h-px bg-[#B8922A]/40" />
-                <div className="absolute top-4 left-4 w-px h-4 bg-[#B8922A]/40" />
-                <div className="absolute bottom-4 right-4 w-4 h-px bg-[#B8922A]/40" />
-                <div className="absolute bottom-4 right-4 w-px h-4 bg-[#B8922A]/40" />
+              {/* Visual area */}
+              <div className="bg-[#F5F1EC] relative overflow-hidden flex items-center justify-center aspect-[4/3]">
+                {b.image ? (
+                  <img
+                    src={b.image}
+                    alt={b.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <>
+                    <span className="font-serif text-[#0F0C09]/[0.065] text-[5rem] sm:text-[6rem] lg:text-[7rem] leading-none select-none">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <div className="absolute top-4 left-4 w-4 h-px bg-[#B8922A]/40" />
+                    <div className="absolute top-4 left-4 w-px h-4 bg-[#B8922A]/40" />
+                    <div className="absolute bottom-4 right-4 w-4 h-px bg-[#B8922A]/40" />
+                    <div className="absolute bottom-4 right-4 w-px h-4 bg-[#B8922A]/40" />
+                  </>
+                )}
 
                 {b.badge && (
                   <div className="absolute top-3 right-3 bg-[#9B1B30] text-white text-[0.46rem] tracking-[0.4em] uppercase px-2.5 py-1.5">
@@ -86,7 +97,7 @@ export default function FeaturedBouquets() {
               <div className="p-4 sm:p-5 flex flex-col gap-3 flex-1 border-t border-[#0F0C09]/[0.06]">
                 <div className="flex-1">
                   <h3 className="font-serif text-[#0F0C09] text-base sm:text-lg mb-0.5 leading-tight">{b.name}</h3>
-                  <p className="text-[#0F0C09]/35 text-[0.68rem] font-light">{b.desc}</p>
+                  {b.desc && <p className="text-[#0F0C09]/35 text-[0.68rem] font-light">{b.desc}</p>}
                 </div>
 
                 <div className="flex items-center justify-between pt-3 border-t border-[#0F0C09]/[0.06]">

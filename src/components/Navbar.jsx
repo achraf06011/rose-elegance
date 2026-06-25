@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Phone } from 'lucide-react'
+import { Menu, X, Phone, Lock } from 'lucide-react'
 
 const links = [
-  { label: 'Collections', href: '#collections' },
-  { label: 'Bouquets', href: '#bouquets' },
-  { label: 'Services', href: '#services' },
-  { label: 'Galerie', href: '#gallery' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Collections', target: 'collections' },
+  { label: 'Bouquets',    target: 'bouquets' },
+  { label: 'Services',    target: 'services' },
+  { label: 'Contact',     target: 'contact' },
 ]
+
+const scrollTo = id => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -41,22 +43,22 @@ export default function Navbar() {
           <div className={`flex items-center justify-between transition-all duration-500 ${scrolled ? 'py-4' : 'py-6'}`}>
 
             {/* Logo */}
-            <a href="#accueil" className="flex flex-col leading-none">
+            <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex flex-col leading-none">
               <span className="font-serif text-[1.25rem] text-white tracking-tight">Rose Élégance</span>
               <span className="text-[0.48rem] tracking-[0.48em] uppercase text-[#B8922A] mt-0.5">Fleuriste Premium</span>
-            </a>
+            </button>
 
             {/* Desktop nav */}
             <nav className="hidden lg:flex items-center gap-9">
               {links.map(l => (
-                <a
+                <button
                   key={l.label}
-                  href={l.href}
+                  onClick={() => scrollTo(l.target)}
                   className="text-white/55 hover:text-white text-[0.78rem] font-light tracking-wide transition-colors duration-300 relative group"
                 >
                   {l.label}
                   <span className="absolute -bottom-0.5 left-0 h-px w-0 group-hover:w-full bg-[#B8922A] transition-all duration-300" />
-                </a>
+                </button>
               ))}
             </nav>
 
@@ -69,12 +71,19 @@ export default function Navbar() {
                 <Phone size={11} />
                 01 23 45 67 89
               </a>
-              <a
-                href="#contact"
+              <button
+                onClick={() => scrollTo('contact')}
                 className="bg-[#9B1B30] hover:bg-[#B8202E] text-white text-[0.58rem] tracking-[0.32em] uppercase px-6 py-3 transition-colors duration-300"
               >
                 Commander
-              </a>
+              </button>
+              <Link
+                to="/admin"
+                title="Espace admin"
+                className="flex items-center gap-1.5 text-white/30 hover:text-white/70 text-[0.6rem] tracking-[0.3em] uppercase border border-white/[0.12] hover:border-white/30 px-3 py-2.5 transition-all duration-300"
+              >
+                <Lock size={10} /> Admin
+              </Link>
             </div>
 
             {/* Hamburger */}
@@ -119,33 +128,38 @@ export default function Navbar() {
             </div>
             <nav className="flex flex-col px-6 pt-4 flex-1">
               {links.map((l, i) => (
-                <motion.a
+                <motion.button
                   key={l.label}
-                  href={l.href}
-                  onClick={() => setOpen(false)}
+                  onClick={() => { scrollTo(l.target); setOpen(false) }}
                   initial={{ opacity: 0, x: 16 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 + i * 0.06 }}
-                  className="py-4 border-b border-white/[0.06] text-white/55 hover:text-white text-sm font-light transition-colors duration-200"
+                  className="py-4 border-b border-white/[0.06] text-white/55 hover:text-white text-sm font-light transition-colors duration-200 text-left"
                 >
                   {l.label}
-                </motion.a>
+                </motion.button>
               ))}
             </nav>
             <div className="p-6 border-t border-white/[0.08]">
-              <a
-                href="#contact"
-                onClick={() => setOpen(false)}
-                className="block bg-[#9B1B30] hover:bg-[#B8202E] text-white text-center py-3.5 text-[0.6rem] tracking-[0.32em] uppercase transition-colors"
+              <button
+                onClick={() => { scrollTo('contact'); setOpen(false) }}
+                className="w-full bg-[#9B1B30] hover:bg-[#B8202E] text-white text-center py-3.5 text-[0.6rem] tracking-[0.32em] uppercase transition-colors"
               >
                 Commander
-              </a>
+              </button>
               <a
                 href="tel:+33123456789"
                 className="flex items-center justify-center gap-2 mt-3 text-white/35 text-xs hover:text-white/60 transition-colors"
               >
                 <Phone size={11} /> 01 23 45 67 89
               </a>
+              <Link
+                to="/admin"
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-center gap-2 mt-4 text-white/25 text-[0.6rem] tracking-[0.3em] uppercase hover:text-white/50 transition-colors border-t border-white/[0.06] pt-4"
+              >
+                <Lock size={10} /> Espace Admin
+              </Link>
             </div>
           </motion.div>
         )}

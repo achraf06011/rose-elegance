@@ -18,6 +18,12 @@
   ::-webkit-scrollbar-thumb { background: #9B1B30; }
 }
 
+/* ── Leaflet z-index fix (prevent map from overlapping fixed navbar) ── */
+.leaflet-container { z-index: 0; }
+.leaflet-pane      { z-index: 0; }
+.leaflet-top,
+.leaflet-bottom    { z-index: 1; }
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }

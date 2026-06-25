@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Instagram, Facebook, Twitter, Youtube, Send, MapPin, Phone, Mail, Clock, ArrowUp } from 'lucide-react'
 
 const navLinks = [
-  { label: 'Accueil', href: '#accueil' },
-  { label: 'Collections', href: '#collections' },
-  { label: 'Bouquets', href: '#bouquets' },
-  { label: 'Services', href: '#services' },
-  { label: 'Galerie', href: '#gallery' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Accueil',     target: null },
+  { label: 'Collections', target: 'collections' },
+  { label: 'Bouquets',    target: 'bouquets' },
+  { label: 'Services',    target: 'services' },
+  { label: 'Contact',     target: 'contact' },
 ]
+
+const scrollTo = target =>
+  target
+    ? document.getElementById(target)?.scrollIntoView({ behavior: 'smooth' })
+    : window.scrollTo({ top: 0, behavior: 'smooth' })
 
 const services = [
   'Mariages & Cérémonies',
@@ -79,13 +84,13 @@ export default function Footer() {
               <ul className="flex flex-col gap-3">
                 {navLinks.map(link => (
                   <li key={link.label}>
-                    <a
-                      href={link.href}
+                    <button
+                      onClick={() => scrollTo(link.target)}
                       className="text-white/35 text-sm font-light hover:text-white transition-colors duration-200 flex items-center gap-1.5 group"
                     >
                       <span className="w-0 group-hover:w-3 h-px bg-[#9B1B30] transition-all duration-300 flex-shrink-0" />
                       {link.label}
-                    </a>
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -166,10 +171,16 @@ export default function Footer() {
             <p className="text-white/20 text-xs">
               © {new Date().getFullYear()} Rose Élégance. Tous droits réservés.
             </p>
-            <div className="flex gap-6">
+            <div className="flex gap-6 items-center">
               {['Mentions légales', 'Confidentialité', 'CGV'].map(l => (
                 <a key={l} href="#" className="text-white/20 text-xs hover:text-white/40 transition-colors">{l}</a>
               ))}
+              <Link
+                to="/admin"
+                className="text-white/10 text-xs hover:text-white/35 transition-colors duration-300 border-l border-white/[0.06] pl-6"
+              >
+                Administration
+              </Link>
             </div>
           </div>
         </div>
@@ -178,8 +189,8 @@ export default function Footer() {
       {/* Back to top — only visible after scroll */}
       <AnimatePresence>
         {showTop && (
-          <motion.a
-            href="#accueil"
+          <motion.button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
@@ -189,7 +200,7 @@ export default function Footer() {
             aria-label="Retour en haut"
           >
             <ArrowUp size={16} />
-          </motion.a>
+          </motion.button>
         )}
       </AnimatePresence>
     </>

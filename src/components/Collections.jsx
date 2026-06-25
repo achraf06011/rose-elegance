@@ -1,15 +1,10 @@
 import { motion } from 'framer-motion'
-
-const categories = [
-  { name: 'Roses',           sub: '48 créations', num: '01' },
-  { name: 'Bouquets',        sub: '64 créations', num: '02' },
-  { name: 'Tulipes',         sub: '32 créations', num: '03' },
-  { name: 'Tournesols',      sub: '24 créations', num: '04' },
-  { name: 'Fleurs de saison',sub: '56 créations', num: '05' },
-  { name: 'Cadeaux floraux', sub: '18 créations', num: '06' },
-]
+import { Link } from 'react-router-dom'
+import { useStore } from '../context/StoreContext'
 
 export default function Collections() {
+  const { categories, countByCategory } = useStore()
+
   return (
     <section id="collections" className="py-24 lg:py-32 bg-[#FDFAF6]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
@@ -41,39 +36,46 @@ export default function Collections() {
           </motion.p>
         </div>
 
-        {/* Editorial list — no photos */}
+        {/* Editorial list */}
         <div className="border-t border-[#0F0C09]/[0.08]">
-          {categories.map((cat, i) => (
-            <motion.a
-              key={cat.name}
-              href="#bouquets"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-              className="group flex items-center justify-between py-5 sm:py-7 border-b border-[#0F0C09]/[0.08] hover:border-[#9B1B30]/30 transition-all duration-300 cursor-pointer"
-            >
-              {/* Left: number + name */}
-              <div className="flex items-baseline gap-5 sm:gap-9">
-                <span className="font-serif text-[#0F0C09]/[0.16] text-sm tracking-[0.2em] group-hover:text-[#9B1B30]/35 transition-colors duration-300 flex-shrink-0">
-                  {cat.num}
-                </span>
-                <h3 className="font-serif text-[#0F0C09] text-[clamp(1.6rem,3.8vw,3.2rem)] leading-none group-hover:translate-x-2 transition-transform duration-400">
-                  {cat.name}
-                </h3>
-              </div>
+          {categories.map((cat, i) => {
+            const count = countByCategory(cat.id)
+            const num   = String(i + 1).padStart(2, '0')
+            return (
+              <motion.div
+                key={cat.id}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.06, duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+              >
+              <Link
+                to={`/category/${cat.id}`}
+                className="group flex items-center justify-between py-5 sm:py-7 border-b border-[#0F0C09]/[0.08] hover:border-[#9B1B30]/30 transition-all duration-300 cursor-pointer"
+              >
+                {/* Left: number + name */}
+                <div className="flex items-baseline gap-5 sm:gap-9">
+                  <span className="font-serif text-[#0F0C09]/[0.16] text-sm tracking-[0.2em] group-hover:text-[#9B1B30]/35 transition-colors duration-300 flex-shrink-0">
+                    {num}
+                  </span>
+                  <h3 className="font-serif text-[#0F0C09] text-[clamp(1.6rem,3.8vw,3.2rem)] leading-none group-hover:translate-x-2 transition-transform duration-300">
+                    {cat.name}
+                  </h3>
+                </div>
 
-              {/* Right: count + arrow */}
-              <div className="flex items-center gap-5 sm:gap-8 flex-shrink-0">
-                <span className="text-[#0F0C09]/28 text-xs font-light hidden sm:block tracking-wide">
-                  {cat.sub}
-                </span>
-                <span className="text-[#0F0C09]/20 group-hover:text-[#9B1B30] transition-colors duration-300 text-xl group-hover:translate-x-1 transition-transform duration-300">
-                  →
-                </span>
-              </div>
-            </motion.a>
-          ))}
+                {/* Right: count + arrow */}
+                <div className="flex items-center gap-5 sm:gap-8 flex-shrink-0">
+                  <span className="text-[#0F0C09]/28 text-xs font-light hidden sm:block tracking-wide">
+                    {count} {count === 1 ? 'création' : 'créations'}
+                  </span>
+                  <span className="text-[#0F0C09]/20 group-hover:text-[#9B1B30] transition-colors duration-300 text-xl group-hover:translate-x-1 transition-transform duration-300">
+                    →
+                  </span>
+                </div>
+              </Link>
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>

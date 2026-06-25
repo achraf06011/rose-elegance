@@ -73,12 +73,12 @@ export default function Services() {
               className="group bg-[#0F0C09] hover:bg-[#161210] transition-colors duration-300 p-8 lg:p-10 cursor-default"
             >
               {/* Big number */}
-              <div className="font-serif text-[#B8922A]/15 text-7xl leading-none mb-5 group-hover:text-[#B8922A]/30 transition-colors duration-400 select-none">
+              <div className="font-serif text-[#B8922A]/30 text-7xl leading-none mb-5 group-hover:text-[#B8922A]/55 transition-colors duration-300 select-none">
                 {s.num}
               </div>
 
               <h3 className="font-serif text-white text-xl mb-3">{s.title}</h3>
-              <p className="text-white/32 text-sm font-light leading-relaxed mb-6">{s.desc}</p>
+              <p className="text-white/60 text-sm font-light leading-relaxed mb-6">{s.desc}</p>
 
               <div className="flex items-center gap-2.5">
                 <div className="w-0 group-hover:w-6 h-px bg-[#9B1B30] transition-all duration-500 flex-shrink-0" />

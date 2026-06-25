@@ -43,15 +43,15 @@ export default function CTA() {
           </p>
 
           <div className="flex flex-wrap gap-4">
-            <motion.a
-              href="#contact"
+            <motion.button
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
               whileHover={{ scale: 1.025 }}
               whileTap={{ scale: 0.975 }}
               transition={{ duration: 0.18 }}
               className="bg-white hover:bg-[#FDFAF6] text-[#9B1B30] text-[0.6rem] tracking-[0.35em] uppercase font-medium px-9 py-4 transition-colors duration-300"
             >
               Commander maintenant
-            </motion.a>
+            </motion.button>
             <motion.a
               href="tel:+33123456789"
               whileHover={{ scale: 1.025 }}

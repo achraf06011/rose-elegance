@@ -1,6 +1,18 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MapPin, Phone, Mail, Clock, Send, Check } from 'lucide-react'
+import { MapContainer, TileLayer, Marker } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+import L from 'leaflet'
+
+const COORDS = [48.8748, 2.3066]
+
+const pin = new L.DivIcon({
+  html: '<div style="width:16px;height:16px;background:#9B1B30;border-radius:50%;border:3px solid white;box-shadow:0 2px 14px rgba(155,27,48,0.55)"></div>',
+  className: '',
+  iconSize: [16, 16],
+  iconAnchor: [8, 8],
+})
 
 const info = [
   { Icon: MapPin, label: 'Adresse', val: '24, Rue des Fleurs, 75008 Paris' },
@@ -163,26 +175,39 @@ export default function Contact() {
               ))}
             </div>
 
-            {/* Decorative map placeholder */}
-            <div className="relative bg-[#0F0C09]/[0.03] border border-[#0F0C09]/8 overflow-hidden h-48 flex items-center justify-center">
-              {/* Grid lines */}
-              <div className="absolute inset-0 opacity-10">
-                {[25, 50, 75].map(pct => (
-                  <div key={pct} className="absolute inset-x-0 border-b border-[#0F0C09]" style={{ top: `${pct}%` }} />
-                ))}
-                {[25, 50, 75].map(pct => (
-                  <div key={pct} className="absolute inset-y-0 border-r border-[#0F0C09]" style={{ left: `${pct}%` }} />
-                ))}
-              </div>
-              {/* Pin */}
-              <div className="relative flex flex-col items-center">
-                <div className="w-4 h-4 rounded-full bg-[#9B1B30] shadow-lg shadow-[#9B1B30]/40" />
-                <div className="w-px h-6 bg-[#9B1B30]/60" />
-              </div>
-              <div className="absolute bottom-3 left-0 right-0 text-center">
-                <span className="text-[#0F0C09]/30 text-[0.5rem] tracking-[0.4em] uppercase">24, Rue des Fleurs · Paris 8e</span>
+            {/* Real map — clic ouvre Google Maps */}
+            <div
+              className="relative h-52 overflow-hidden border border-[#0F0C09]/8 cursor-pointer group"
+              onClick={() => window.open(
+                `https://www.google.com/maps/search/?api=1&query=${COORDS[0]},${COORDS[1]}`,
+                '_blank'
+              )}
+            >
+              <MapContainer
+                center={COORDS}
+                zoom={15}
+                style={{ height: '100%', width: '100%' }}
+                zoomControl={false}
+                scrollWheelZoom={false}
+                dragging={false}
+                doubleClickZoom={false}
+                keyboard={false}
+                attributionControl={false}
+              >
+                <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
+                <Marker position={COORDS} icon={pin} />
+              </MapContainer>
+
+              {/* Hover overlay */}
+              <div className="absolute inset-0 bg-[#0F0C09]/0 group-hover:bg-[#0F0C09]/20 transition-colors duration-300 pointer-events-none flex items-center justify-center">
+                <span className="bg-white text-[#9B1B30] text-[0.5rem] tracking-[0.38em] uppercase px-4 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md">
+                  Ouvrir dans Google Maps →
+                </span>
               </div>
             </div>
+            <p className="text-[#0F0C09]/30 text-[0.5rem] tracking-[0.4em] uppercase text-center mt-2">
+              24, Rue des Fleurs · Paris 8e
+            </p>
           </motion.div>
         </div>
       </div>
